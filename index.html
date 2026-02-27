@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Cronograma de Estudos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 800px; /* Aumentei um pouco para caber os botões */
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        form, .filtros {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        input, select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+            flex: 1 1 150px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #2980b9; }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border-bottom: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+        
+        /* Estilos dos botões de ação */
+        .acoes { display: flex; gap: 5px; }
+        .btn-concluir { background-color: #2ecc71; }
+        .btn-concluir:hover { background-color: #27ae60; }
+        .btn-remover { background-color: #e74c3c; }
+        .btn-remover:hover { background-color: #c0392b; }
+        
+        /* Estilo para tarefas concluídas */
+        .concluido td {
+            text-decoration: line-through;
+            color: #95a5a6;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>📚 Cronograma de Estudos</h2>
+        
+        <form id="formCronograma">
+            <select id="dia" required>
+                <option value="" disabled selected>Selecione o Dia</option>
+                <option value="Segunda-feira">Segunda-feira</option>
+                <option value="Terça-feira">Terça-feira</option>
+                <option value="Quarta-feira">Quarta-feira</option>
+                <option value="Quinta-feira">Quinta-feira</option>
+                <option value="Sexta-feira">Sexta-feira</option>
+                <option value="Sábado">Sábado</option>
+                <option value="Domingo">Domingo</option>
+            </select>
+            <input type="time" id="hora" required>
+            <input type="text" id="materia" placeholder="Matéria (ex: História)" required>
+            <input type="text" id="topico" placeholder="Tópico (ex: Guerra Fria)" required>
+            <button type="submit" style="flex: 1 1 100%;">Adicionar</button>
+        </form>
+
+        <div class="filtros">
+            <label style="align-self: center; font-weight: bold;">Filtrar por dia:</label>
+            <select id="filtroDia" onchange="atualizarTela()">
+                <option value="Todos">Mostrar Todos os Dias</option>
+                <option value="Segunda-feira">Segunda-feira</option>
+                <option value="Terça-feira">Terça-feira</option>
+                <option value="Quarta-feira">Quarta-feira</option>
+                <option value="Quinta-feira">Quinta-feira</option>
+                <option value="Sexta-feira">Sexta-feira</option>
+                <option value="Sábado">Sábado</option>
+                <option value="Domingo">Domingo</option>
+            </select>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Dia</th>
+                    <th>Hora</th>
+                    <th>Matéria</th>
+                    <th>Tópico</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="listaCronograma">
+                </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Carrega os dados ou cria lista vazia
+        let cronograma = JSON.parse(localStorage.getItem('cronogramaAvancado')) || [];
+
+        function atualizarTela() {
+            const lista = document.getElementById('listaCronograma');
+            const filtroSelecionado = document.getElementById('filtroDia').value;
+            lista.innerHTML = ''; 
+            
+            // Filtra os itens com base no dia selecionado (ou mostra todos)
+            let tarefasFiltradas = cronograma;
+            if (filtroSelecionado !== 'Todos') {
+                tarefasFiltradas = cronograma.filter(item => item.dia === filtroSelecionado);
+            }
+
+            // Ordena pelo horário
+            tarefasFiltradas.sort((a, b) => a.hora.localeCompare(b.hora));
+
+            // Renderiza na tela
+            tarefasFiltradas.forEach((item) => {
+                const tr = document.createElement('tr');
+                
+                // Se estiver concluído, adiciona a classe CSS "concluido"
+                if(item.concluido) {
+                    tr.classList.add('concluido');
+                }
+
+                tr.innerHTML = `
+                    <td>${item.dia}</td>
+                    <td><strong>${item.hora}</strong></td>
+                    <td>${item.materia}</td>
+                    <td>${item.topico}</td>
+                    <td class="acoes">
+                        <button class="btn-concluir" onclick="alternarStatus(${item.id})">✔</button>
+                        <button class="btn-remover" onclick="removerItem(${item.id})">✖</button>
+                    </td>
+                `;
+                lista.appendChild(tr);
+            });
+        }
+
+        document.getElementById('formCronograma').addEventListener('submit', function(evento) {
+            evento.preventDefault(); 
+            
+            const dia = document.getElementById('dia').value;
+            const hora = document.getElementById('hora').value;
+            const materia = document.getElementById('materia').value;
+            const topico = document.getElementById('topico').value;
+
+            // Criamos um ID único (baseado na data atual) para não dar erro ao filtrar e excluir
+            const novaTarefa = { 
+                id: Date.now(), 
+                dia, 
+                hora, 
+                materia, 
+                topico, 
+                concluido: false 
+            };
+
+            cronograma.push(novaTarefa);
+            salvarDados();
+            this.reset();
+            
+            // Muda o filtro para o dia que acabou de ser adicionado para o usuário ver
+            document.getElementById('filtroDia').value = dia;
+            atualizarTela();
+        });
+
+        // Altera entre concluído e não concluído
+        function alternarStatus(id) {
+            const index = cronograma.findIndex(item => item.id === id);
+            if(index !== -1) {
+                cronograma[index].concluido = !cronograma[index].concluido;
+                salvarDados();
+                atualizarTela();
+            }
+        }
+
+        // Remove o item
+        function removerItem(id) {
+            const index = cronograma.findIndex(item => item.id === id);
+            if(index !== -1) {
+                cronograma.splice(index, 1);
+                salvarDados();
+                atualizarTela();
+            }
+        }
+
+        function salvarDados() {
+            localStorage.setItem('cronogramaAvancado', JSON.stringify(cronograma));
+        }
+
+        atualizarTela();
+    </script>
+</body>
+</html>
