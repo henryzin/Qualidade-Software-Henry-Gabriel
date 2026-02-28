@@ -1,29 +1,29 @@
-# Requisitos
-+ Cadastro de Estudo: O sistema deve permitir que o usuário insira o dia da semana, o horário, a matéria e o tópico específico a ser estudado.
+1. Requisitos Fundionais (RF)
+ Cadastro de Estudo: O sistema deve permitir que o usuário insira o dia da semana, o horário, a matéria e o tópico específico a ser estudado.
 
-- Listagem Dinâmica: O sistema deve exibir todos os estudos cadastrados em uma tabela organizada.
+Listagem Dinâmica: O sistema deve exibir todos os estudos cadastrados em uma tabela organizada.
 
-- Ordenação Automática: Os itens da lista devem ser ordenados automaticamente pelo horário (do mais cedo para o mais tarde).
+ Ordenação Automática: Os itens da lista devem ser ordenados automaticamente pelo horário (do mais cedo para o mais tarde).
 
-- Filtro por Dia: O usuário deve conseguir filtrar a visualização para ver apenas os estudos de um dia específico ou todos os dias simultaneamente.
+ Filtro por Dia: O usuário deve conseguir filtrar a visualização para ver apenas os estudos de um dia específico ou todos os dias simultaneamente.
 
-- Controle de Status (Checklist): O sistema deve permitir marcar um estudo como "Concluído", aplicando um efeito visual (riscado) para diferenciar das tarefas pendentes.
+ Controle de Status (Checklist): O sistema deve permitir marcar um estudo como "Concluído", aplicando um efeito visual (riscado) para diferenciar das tarefas pendentes.
 
-- Exclusão de Dados: O sistema deve permitir que o usuário remova permanentemente um item do cronograma.
+ Exclusão de Dados: O sistema deve permitir que o usuário remova permanentemente um item do cronograma.
 
-- Persistência de Dados: O sistema deve salvar as informações para que elas não sejam perdidas ao fechar ou atualizar o navegador.
+ Persistência de Dados: O sistema deve salvar as informações para que elas não sejam perdidas ao fechar ou atualizar o navegador.
 
-- Alternância de Tema: O sistema deve oferecer um modo claro e um modo escuro (Dark Mode) para conforto visual.
+ Alternância de Tema: O sistema deve oferecer um modo claro e um modo escuro (Dark Mode) para conforto visual.
 
 2. Requisitos Não Funcionais (RNF)
 Estes descrevem a qualidade e as restrições do sistema:
 
-- Usabilidade: A interface deve ser simples e intuitiva, permitindo que o aluno adicione tarefas com poucos cliques.
+ Usabilidade: A interface deve ser simples e intuitiva, permitindo que o aluno adicione tarefas com poucos cliques.
 
-- Responsividade: O layout deve se ajustar automaticamente a diferentes tamanhos de tela (computadores, tablets e celulares).
+ Responsividade: O layout deve se ajustar automaticamente a diferentes tamanhos de tela (computadores, tablets e celulares).
 
-- Desempenho: O carregamento das tarefas e a filtragem devem ser instantâneos, processados no lado do cliente (navegador).
+ Desempenho: O carregamento das tarefas e a filtragem devem ser instantâneos, processados no lado do cliente (navegador).
 
-- Tecnologia: O sistema deve ser construído utilizando tecnologias web padrão (HTML5, CSS3 e JavaScript ES6) sem dependência de bibliotecas externas pesadas.
+Tecnologia: O sistema deve ser construído utilizando tecnologias web padrão (HTML5, CSS3 e JavaScript ES6) sem dependência de bibliotecas externas pesadas.
 
 Armazenamento: Os dados devem ser armazenados localmente via localStorage, garantindo privacidade ao usuário.
