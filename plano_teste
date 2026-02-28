@@ -1,1 +1,7 @@
-plano_teste.txt 
+PLANOS DE TESTE
+Adicionar Tarefa,"Preencher dia, hora, matéria e tópico e clicar em ""Adicionar"".",A tarefa deve aparecer na tabela imediatamente.
+Ordenação,Adicionar uma tarefa às 10:00 e outra às 08:00.,A tarefa das 08:00 deve aparecer acima da de 10:00.
+Persistência,Adicionar uma tarefa e atualizar a página (F5).,A tarefa deve continuar visível na tabela.
+Conclusão,Clicar no botão de check (✔) de uma tarefa.,O texto deve ficar riscado e a opacidade deve diminuir.
+Filtro por Dia,Adicionar tarefas em dias diferentes e selecionar um dia específico no filtro.,Apenas as tarefas do dia selecionado devem ser exibidas.
+Exclusão,Clicar no botão de remover (✖).,A tarefa deve sumir da lista e do armazenamento.
